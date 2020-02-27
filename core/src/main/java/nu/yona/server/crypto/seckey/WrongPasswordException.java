@@ -4,14 +4,13 @@
  *******************************************************************************/
 package nu.yona.server.crypto.seckey;
 
-import static nu.yona.server.rest.RestConstants.PASSWORD_HEADER;
-
 import java.io.Serializable;
 
 import nu.yona.server.exceptions.YonaException;
 
 public class WrongPasswordException extends YonaException
 {
+	public static final String PASSWORD_HEADER = "Yona-Password";
 	private static final long serialVersionUID = 1989876591001478378L;
 
 	private WrongPasswordException(String messageId, Serializable... parameters)

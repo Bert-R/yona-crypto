@@ -6,8 +6,6 @@ package nu.yona.server.exceptions;
 
 import java.io.Serializable;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * Generic exception class for any Yona exception.
  */
@@ -20,19 +18,9 @@ public class YonaException extends ResourceBasedException
 		super(messageId, parameters);
 	}
 
-	protected YonaException(HttpStatus statusCode, String messageId, Serializable... parameters)
-	{
-		super(statusCode, messageId, parameters);
-	}
-
 	protected YonaException(Throwable t, String messageId, Serializable... parameters)
 	{
 		super(t, messageId, parameters);
-	}
-
-	protected YonaException(HttpStatus statusCode, Throwable t, String messageId, Serializable... parameters)
-	{
-		super(statusCode, t, messageId, parameters);
 	}
 
 	public static YonaException unexpected(Throwable e)
