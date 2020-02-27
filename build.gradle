@@ -10,7 +10,7 @@ repositories {
 description = 'Core'
 
 jar {
-	baseName = 'Core'
+	baseName = 'yona-crypto'
 }
 
 dependencies {
@@ -31,7 +31,6 @@ test {
 	jvmArgs '-ea'
 	useJUnitPlatform()
 }
-description = "Yona server"
 
 wrapper {
 	gradleVersion = "6.1"
