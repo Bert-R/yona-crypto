@@ -1,50 +1,37 @@
-import org.gradle.internal.util.PropertiesUtils
-import java.nio.charset.StandardCharsets 
-
-buildscript {
-	repositories {
-		jcenter()
-	}
-}
-
 plugins {
 	id "java"
 	id "eclipse"
 }
 
+repositories {
+	jcenter()
+}
+
+description = 'Core'
+
+jar {
+	baseName = 'Core'
+}
+
+dependencies {
+	compile "org.hibernate:hibernate-java8:5.1.2.Final"
+	compile "commons-validator:commons-validator:1.4.1"
+	compile "commons-lang:commons-lang:2.4"
+	compile "com.google.guava:guava:18.0"
+	compile "org.slf4j:slf4j-api:1.7.30"
+
+	testCompile "org.junit.jupiter:junit-jupiter:5.4.0"
+	testCompile "org.hamcrest:hamcrest-all:1.3"
+	testCompile "com.spencerwi:hamcrest-jdk8-time:0.7.1"
+	testCompile "nl.jqno.equalsverifier:equalsverifier:3.1.10"
+}
+
+test {
+	// Enable assertions
+	jvmArgs '-ea'
+	useJUnitPlatform()
+}
 description = "Yona server"
-
-allprojects {
-	group = "yonadev"
-}
-
-subprojects {
-	sourceCompatibility = 11.0
-	targetCompatibility = 11.0
-	apply plugin: "eclipse"
-	apply plugin: "java"
-
-	project.ext {
-		build_number = System.getenv().BUILD_NUMBER ?: 0
-		docker_tag = "build-${build_number}"
-	}
-
-	repositories {
-		jcenter()
-	}
-
-	tasks.withType(JavaCompile) {
-		options.compilerArgs << '-Xlint:all,-try'
-		options.deprecation = true
-	}
-}
-
-eclipse {
-	classpath {
-		 containers.remove("org.eclipse.jdt.launching.JRE_CONTAINER")
-		 containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"
-	}
-}
 
 wrapper {
 	gradleVersion = "6.1"

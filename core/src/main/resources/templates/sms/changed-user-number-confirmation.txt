@@ -1,1 +1,0 @@
-[[ #{changed-user-number-confirmation(${confirmationCode})} ]]
