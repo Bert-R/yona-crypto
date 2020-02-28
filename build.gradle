@@ -13,6 +13,9 @@ jar {
 	baseName = 'yona-crypto'
 }
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	compile "org.hibernate:hibernate-java8:5.1.2.Final"
 	compile "commons-validator:commons-validator:1.4.1"

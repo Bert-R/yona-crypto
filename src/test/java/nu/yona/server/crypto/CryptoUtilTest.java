@@ -8,7 +8,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ public class CryptoUtilTest
 		for (int i = 0; (i < 10); i++)
 		{
 			String randomString = CryptoUtil.getRandomString(50);
-			assertThat(URLEncoder.encode(randomString, StandardCharsets.UTF_8), equalTo(randomString));
+			assertThat(URLEncoder.encode(randomString), equalTo(randomString));
 		}
 	}
 }
