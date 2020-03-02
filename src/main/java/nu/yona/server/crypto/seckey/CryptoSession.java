@@ -51,7 +51,13 @@ public class CryptoSession implements AutoCloseable
 
 	private CryptoSession(SecretKey secretKey, CryptoSession previousCryptoSession)
 	{
+		this(secretKey, Optional.empty(), previousCryptoSession);
+	}
+
+	private CryptoSession(SecretKey secretKey, Optional<byte[]> initializationVector, CryptoSession previousCryptoSession)
+	{
 		this.secretKey = secretKey;
+		this.initializationVector = initializationVector;
 		this.previousCryptoSession = previousCryptoSession;
 		threadLocal.set(this);
 	}
@@ -123,9 +129,20 @@ public class CryptoSession implements AutoCloseable
 		return new CryptoSession(secretKey, threadLocal.get());
 	}
 
+	public static CryptoSession start(SessionExport export)
+	{
+		logger.debug("Starting crypto session on thread {} by means of an import", Thread.currentThread());
+		return new CryptoSession(export.secretKey, export.initializationVector, threadLocal.get());
+	}
+
 	public static boolean isActive()
 	{
 		return threadLocal.get() != null;
+	}
+
+	public SessionExport export()
+	{
+		return new SessionExport(secretKey, initializationVector);
 	}
 
 	public static CryptoSession getCurrent()
@@ -298,5 +315,17 @@ public class CryptoSession implements AutoCloseable
 	public interface VoidPredicate
 	{
 		boolean test();
+	}
+
+	public static class SessionExport
+	{
+		final SecretKey secretKey;
+		final Optional<byte[]> initializationVector;
+
+		public SessionExport(SecretKey secretKey, Optional<byte[]> initializationVector)
+		{
+			this.secretKey = secretKey;
+			this.initializationVector = initializationVector;
+		}
 	}
 }
